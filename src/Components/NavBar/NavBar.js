@@ -42,7 +42,7 @@ function NavBar() {
         <div className="hidden lg:flex items-center flex-1 justify-end">
           <nav className="flex items-center space-x-6 mr-4">
             <Link
-              to="/"
+              to="/starships"
               className="text-white hover:text-yellow-500 transition duration-200"
             >
               Inicio
@@ -70,7 +70,7 @@ function NavBar() {
       <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
         <nav className="flex flex-col items-center mt-4">
           <Link
-            to="/"
+            to="/starships"
             className="text-white hover:text-yellow-500 transition duration-200 py-2"
           >
             Inicio

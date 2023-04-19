@@ -11,7 +11,7 @@ function App() {
         <NavBar />
         <main className="App-main">
           <Routes>
-            <Route exact path="/" element={<ShipList/>} />
+            <Route exact path="/starships" element={<ShipList/>} />
             {/* Añade aquí otras rutas si es necesario */}
           </Routes>
         </main>
