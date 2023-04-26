@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth-context';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { setIsLoggedInUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  const users = JSON.parse(localStorage.getItem('users')) || [];
-  const user = users.find((u) => u.email === email && u.password === password);
+    e.preventDefault();
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find((u) => u.email === email && u.password === password);
 
-  if (user) {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-    console.log('Inicio de sesión exitoso.');
-  } else {
-    console.error('Correo electrónico o contraseña incorrecta.');
-  }
-};
+    if (user) {
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      setIsLoggedInUser(true);
+      console.log('Inicio de sesión exitoso.');
+      navigate('/starships'); // Aquí se utiliza navigate
+    } else {
+      console.error('Correo electrónico o contraseña incorrecta.');
+    }
+  };
 
 
   return (
