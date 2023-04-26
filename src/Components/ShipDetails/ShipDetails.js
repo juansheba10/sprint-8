@@ -3,32 +3,46 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import defaultImage from '../../assets/unnamed.png';
 import PilotCard from '../PilotCard/PilotCard';
+import FilmCard from '../FilmCard/FilmCard';
 
 function ShipDetails() {
   const { id } = useParams();
   const [ship, setShip] = useState(null);
   const [pilots, setPilots] = useState([]);
+  const [films, setFilms] = useState([])
 
   useEffect(() => {
     axios.get(`https://swapi.dev/api/starships/${id}/`)
-      .then((response) => {
-        setShip(response.data);
-        return response.data.pilots;
-      })
-      .then((pilotUrls) => {
-        const promises = pilotUrls.map((url) => axios.get(url));
-        return Promise.all(promises);
-      })
-      .then((responses) => {
-        const newPilots = responses.map((response) => ({
-          name: response.data.name,
-          imageUrl: `https://starwars-visualguide.com/assets/img/characters/${response.data.url.match(/(\d+)\/$/)[1]}.jpg`,
-        }));
-        setPilots(newPilots);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  .then((response) => {
+    setShip(response.data);
+    return response.data.pilots;
+  })
+  .then((pilotUrls) => {
+    const promises = pilotUrls.map((url) => axios.get(url));
+    return Promise.all(promises);
+  })
+  .then((responses) => {
+    const newPilots = responses.map((response) => ({
+      name: response.data.name,
+      imageUrl: `https://starwars-visualguide.com/assets/img/characters/${response.data.url.match(/(\d+)\/$/)[1]}.jpg`,
+    }));
+    setPilots(newPilots);
+  })
+  .then(() => {
+    const filmUrls = ship.films;
+    const promises = filmUrls.map((url) => axios.get(url));
+    return Promise.all(promises);
+  })
+  .then((responses) => {
+    const newFilms = responses.map((response) => ({
+      name: response.data.title,
+      imageUrl: `https://starwars-visualguide.com/assets/img/films/${response.data.episode_id}.jpg`,
+    }));
+    setFilms(newFilms);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
   }, [id]);
 
   if (!ship) {
@@ -67,6 +81,14 @@ function ShipDetails() {
         {pilots.map((pilot) => (
           <div key={pilot.name}>
             <PilotCard name={pilot.name} imageUrl={pilot.imageUrl} />
+          </div>
+        ))}
+      </div>
+      <h2 className="text-2xl font-semibold text-yellow-400 my-4">Films</h2>
+      <div className="grid grid-cols-2 gap-4">
+        {films.map((film) => (
+          <div key={film.title}>
+            <FilmCard name={film.name} imageUrl={film.imageUrl} />
           </div>
         ))}
       </div>
