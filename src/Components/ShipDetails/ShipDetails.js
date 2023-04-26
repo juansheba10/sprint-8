@@ -23,12 +23,12 @@ function ShipDetails() {
   const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md mx-auto">
+    <div className="bg-gray-800 text-gray-300 rounded-lg shadow-md p-6 w-full max-w-md mx-auto">
       <img src={imageUrl} alt={ship.name} className="w-full h-48 object-cover mb-4 rounded" />
-      <h1 className="text-2xl font-semibold mb-4">{ship.name}</h1>
+      <h1 className="text-2xl font-semibold text-yellow-400 mb-4">{ship.name}</h1>
       <p className="text-lg font-medium">Model: {ship.model}</p>
       {/* Muestra aquí más información sobre la nave */}
-      <ul className="list-disc list-inside mt-4 space-y-2">
+      <ul className="list-disc list-inside mt-4 space-y-2 text-gray-300">
         <li>Manufacturer: {ship.manufacturer}</li>
         <li>Cost in credits: {ship.cost_in_credits}</li>
         <li>Length: {ship.length}</li>

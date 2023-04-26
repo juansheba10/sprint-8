@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/images/Star_Wars_Logo.svg.png';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,11 +10,11 @@ function NavBar() {
   };
 
   return (
-    <header className="bg-gray-800 text-white py-4 px-6">
+    <header className="bg-gray-700 text-gray-300 py-4 px-6">
       <div className="flex items-center justify-between flex-wrap lg:flex-nowrap">
         {/* Logo y título */}
         <div className="flex items-center">
-          <img className="w-12 h-auto mr-4" src="path/to/logo.png" alt="Star Wars Ships" />
+          <img className="w-12 h-auto mr-4" src={logo} alt="Star Wars" />
           <h1 className="text-xl font-semibold">Star Wars Ships</h1>
         </div>
 
@@ -23,7 +24,7 @@ function NavBar() {
           onClick={toggleMenu}
         >
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 text-gray-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -43,13 +44,13 @@ function NavBar() {
           <nav className="flex items-center space-x-6 mr-4">
             <Link
               to="/starships"
-              className="text-white hover:text-yellow-500 transition duration-200"
+              className="text-gray-300 hover:text-yellow-500 transition duration-200"
             >
               STARSHIPS
             </Link>
             <Link
               to="/about"
-              className="text-white hover:text-yellow-500 transition duration-200"
+              className="text-gray-300 hover:text-yellow-500 transition duration-200"
             >
               Acerca de
             </Link>
@@ -58,7 +59,7 @@ function NavBar() {
           <div className="relative">
             <input
               type="search"
-              className="bg-gray-700 text-white px-4 py-2 rounded-md"
+              className="bg-gray-700 text-gray-300 placeholder-gray-400 px-4 py-2 rounded-md"
               placeholder="Buscar nave"
               // onChange={handleSearchChange}
             />
@@ -67,17 +68,17 @@ function NavBar() {
       </div>
 
       {/* Enlaces de navegación y campo de búsqueda en dispositivos pequeños */}
-      <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-        <nav className="flex flex-col items-center mt-4">
+      <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'} mt-4`}>
+        <nav className="flex flex-col items-center space-y-2">
           <Link
-            to="/starships"
-            className="text-white hover:text-yellow-500 transition duration-200 py-2"
+                      to="/starships"
+            className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
           >
             Inicio
           </Link>
           <Link
             to="/about"
-            className="text-white hover:text-yellow-500 transition duration-200 py-2"
+            className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
           >
             Acerca de
           </Link>
@@ -86,7 +87,7 @@ function NavBar() {
         <div className="relative mt-4">
           <input
             type="search"
-            className="bg-gray-700 text-white px-4 py-2 rounded-md w-full"
+            className="bg-gray-700 text-gray-300 placeholder-gray-400 px-4 py-2 rounded-md w-full"
             placeholder="Buscar nave"
             // onChange={handleSearchChange}
           />
