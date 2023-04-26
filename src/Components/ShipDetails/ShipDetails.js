@@ -2,15 +2,29 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import defaultImage from '../../assets/unnamed.png';
+import PilotCard from '../PilotCard/PilotCard';
 
 function ShipDetails() {
   const { id } = useParams();
   const [ship, setShip] = useState(null);
+  const [pilots, setPilots] = useState([]);
 
   useEffect(() => {
     axios.get(`https://swapi.dev/api/starships/${id}/`)
       .then((response) => {
         setShip(response.data);
+        return response.data.pilots;
+      })
+      .then((pilotUrls) => {
+        const promises = pilotUrls.map((url) => axios.get(url));
+        return Promise.all(promises);
+      })
+      .then((responses) => {
+        const newPilots = responses.map((response) => ({
+          name: response.data.name,
+          imageUrl: `https://starwars-visualguide.com/assets/img/characters/${response.data.url.match(/(\d+)\/$/)[1]}.jpg`,
+        }));
+        setPilots(newPilots);
       })
       .catch((error) => {
         console.error(error);
@@ -47,6 +61,15 @@ function ShipDetails() {
         <li>Cargo capacity: {ship.cargo_capacity}</li>
         <li>Hyperdrive rating: {ship.hyperdrive_rating}</li>
       </ul>
+      {/* Muestra las tarjetas de los pilotos */}
+      <h2 className="text-2xl font-semibold text-yellow-400 my-4">Pilots</h2>
+      <div className="grid grid-cols-2 gap-4">
+        {pilots.map((pilot) => (
+          <div key={pilot.name}>
+            <PilotCard name={pilot.name} imageUrl={pilot.imageUrl} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
