@@ -45,7 +45,7 @@ function NavBar() {
               to="/starships"
               className="text-white hover:text-yellow-500 transition duration-200"
             >
-              Inicio
+              STARSHIPS
             </Link>
             <Link
               to="/about"
