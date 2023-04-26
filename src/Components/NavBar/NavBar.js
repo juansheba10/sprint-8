@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/Star_Wars_Logo.svg.png';
+import logo from '../../assets/images/sw_logo_stacked_2x-52b4f6d33087_7ef430af.png';
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,8 +14,9 @@ function NavBar() {
       <div className="flex items-center justify-between flex-wrap lg:flex-nowrap">
         {/* Logo y título */}
         <div className="flex items-center">
-          <img className="w-12 h-auto mr-4" src={logo} alt="Star Wars" />
-          <h1 className="text-xl font-semibold">Star Wars Ships</h1>
+          <Link to="/">
+            <img className="w-28 h-auto mr-4" src={logo} alt="Star Wars" />
+          </Link>
         </div>
 
         {/* Botón de menú en dispositivos móviles */}

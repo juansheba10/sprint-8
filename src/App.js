@@ -3,15 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import ShipList from './Components/ShipList/ShipList';
 import ShipDetails from './Components/ShipDetails/ShipDetails';
+import Welcome from './Components/Welcome/Welcome';
 import './App.css';
-
-function Welcome() {
-  return (
-    <div>
-      <h1>Bienvenido a la página de Star Wars Ships</h1>
-    </div>
-  );
-}
 
 function App() {
   return (
@@ -30,6 +23,4 @@ function App() {
   );
 }
 
-
 export default App;
-

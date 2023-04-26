@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import defaultImage from '../../assets/unnamed.png';
 
 function ShipDetails() {
   const { id } = useParams();
@@ -22,9 +23,18 @@ function ShipDetails() {
 
   const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
 
+  const handleImageError = (e) => {
+    e.target.src = defaultImage;
+  };
+
   return (
     <div className="bg-gray-800 text-gray-300 rounded-lg shadow-md p-6 w-full max-w-md mx-auto">
-      <img src={imageUrl} alt={ship.name} className="w-full h-48 object-cover mb-4 rounded" />
+      <img
+        src={imageUrl}
+        alt={ship.name}
+        className="w-full h-48 object-cover mb-4 rounded"
+        onError={handleImageError}
+      />
       <h1 className="text-2xl font-semibold text-yellow-400 mb-4">{ship.name}</h1>
       <p className="text-lg font-medium">Model: {ship.model}</p>
       {/* Muestra aquí más información sobre la nave */}
