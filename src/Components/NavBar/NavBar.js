@@ -55,6 +55,18 @@ function NavBar() {
             >
               Acerca de
             </Link>
+            <Link
+              to="/login"
+              className="text-gray-300 hover:text-yellow-500 transition duration-200"
+            >
+              Iniciar sesión
+            </Link>
+            <Link
+              to="/register"
+              className="text-gray-300 hover:text-yellow-500 transition duration-200"
+            >
+              Registrarse
+            </Link>
           </nav>
 
           <div className="relative">
@@ -72,7 +84,7 @@ function NavBar() {
       <div className={`lg:hidden ${isMenuOpen ? 'block' : 'hidden'} mt-4`}>
         <nav className="flex flex-col items-center space-y-2">
           <Link
-                      to="/starships"
+            to="/starships"
             className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
           >
             Inicio
@@ -82,6 +94,18 @@ function NavBar() {
             className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
           >
             Acerca de
+          </Link>
+                    <Link
+            to="/login"
+            className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
+          >
+            Iniciar sesión
+          </Link>
+          <Link
+            to="/register"
+            className="text-gray-300 hover:text-yellow-500 transition duration-200 py-2"
+          >
+            Registrarse
           </Link>
         </nav>
 
