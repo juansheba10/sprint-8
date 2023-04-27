@@ -11,39 +11,55 @@ function ShipDetails() {
   const [pilots, setPilots] = useState([]);
   const [films, setFilms] = useState([])
 
-  useEffect(() => {
-    axios.get(`https://swapi.dev/api/starships/${id}/`)
-  .then((response) => {
-    setShip(response.data);
-    return response.data.pilots;
-  })
-  .then((pilotUrls) => {
-    const promises = pilotUrls.map((url) => axios.get(url));
-    return Promise.all(promises);
-  })
-  .then((responses) => {
-    const newPilots = responses.map((response) => ({
-      name: response.data.name,
-      imageUrl: `https://starwars-visualguide.com/assets/img/characters/${response.data.url.match(/(\d+)\/$/)[1]}.jpg`,
-    }));
-    setPilots(newPilots);
-  })
-  .then(() => {
-    const filmUrls = ship.films;
-    const promises = filmUrls.map((url) => axios.get(url));
-    return Promise.all(promises);
-  })
-  .then((responses) => {
-    const newFilms = responses.map((response) => ({
-      name: response.data.title,
-      imageUrl: `https://starwars-visualguide.com/assets/img/films/${response.data.episode_id}.jpg`,
-    }));
-    setFilms(newFilms);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-  }, [id]);
+useEffect(() => {
+  axios.get(`https://swapi.dev/api/starships/${id}/`)
+    .then((response) => {
+      setShip(response.data);
+      return response.data.pilots;
+    })
+    .then((pilotUrls) => {
+      const promises = pilotUrls.map((url) => axios.get(url));
+      return Promise.all(promises);
+    })
+    .then((responses) => {
+      const newPilots = responses.map((response) => ({
+        name: response.data.name,
+        imageUrl: `https://starwars-visualguide.com/assets/img/characters/${response.data.url.match(/(\d+)\/$/)[1]}.jpg`,
+      }));
+      setPilots(newPilots);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  // Obtener información de las películas
+  axios.get(`https://swapi.dev/api/starships/${id}/`)
+    .then((response) => {
+      const filmUrls = response.data.films;
+      const promises = filmUrls.map((url) => axios.get(url));
+      return Promise.all(promises);
+    })
+    .then((responses) => {
+      const newFilms = responses.map((response) => {
+        const filmId = response.data.url.match(/(\d+)\/$/)[1];
+        return {
+          name: response.data.title,
+          imageUrl: `https://starwars-visualguide.com/assets/img/films/${filmId}.jpg`,
+          filmId: parseInt(filmId), // Agregar filmId para asociar imágenes y películas
+        };
+      });
+      return newFilms;
+    })
+    .then((newFilms) => {
+      // Ordenar las películas por filmId
+      newFilms.sort((a, b) => a.filmId - b.filmId);
+      setFilms(newFilms);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, [id]);
+
 
   if (!ship) {
     return <div>Loading...</div>;
@@ -86,8 +102,8 @@ function ShipDetails() {
       </div>
       <h2 className="text-2xl font-semibold text-yellow-400 my-4">Films</h2>
       <div className="grid grid-cols-2 gap-4">
-        {films.map((film) => (
-          <div key={film.title}>
+        {films.map((film, index) => (
+          <div key={index}>
             <FilmCard name={film.name} imageUrl={film.imageUrl} />
           </div>
         ))}
